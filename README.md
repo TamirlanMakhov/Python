@@ -2,8 +2,11 @@
 
 ## Оглавление
 -[Работа со строками](https://github.com/TamirlanMakhov/Python#Строки)
+
 -[Работа с числами](https://github.com/TamirlanMakhov/Python#Числа)
+
 -[Простые циклы](https://github.com/TamirlanMakhov/Python#Простые-циклы)
+
 -[Списки, матрицы](https://github.com/TamirlanMakhov/Python#Списки)
 
 
