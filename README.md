@@ -15,6 +15,8 @@
 
 -[Функции](https://github.com/TamirlanMakhov/Python#Функции)
 
+-[Работа с файлами](https://github.com/TamirlanMakhov/Python#Файлы)
+
 
 
 
@@ -941,6 +943,139 @@ from functools import reduce as r
 
 eval = lambda coef, x: r(lambda v, c: c + v * x, map(int, coef))
 print(eval(input().split(), int(input())))
+```
+
+### Файлы
+1. Вам доступен текстовый файл text.txt с одной строкой текста. Напишите программу, которая выводит на экран эту строку в обратном порядке.
+```python
+with open(r'text.txt') as file:
+    content = file.readline()
+    print(content[::-1])
+```
+
+2. Вам доступен текстовый файл data.txt, в котором записаны строки текста. Напишите программу, выводящую все строки данного файла в обратном порядке: сначала последнюю, затем предпоследнюю и т.д.
+```python
+with open(r'data.txt') as file:
+    for i in reversed(list(map(str.strip, file.readlines()))):
+        print(i)
+```
+
+3. Вам доступен текстовый файл lines.txt, в котором записаны строки текста. Напишите программу, которая выводит все строки наибольшей длины из файла, не меняя их порядок.
+```python
+with open(r'lines.txt') as file:
+    content = list(map(str.strip, file.readlines()))
+    maxlen = max(len(line) for line in content)
+    print(*list(filter(lambda line: len(line) == maxlen, content)), sep='\n')
+```
+
+4. Вам доступен текстовый файл numbers.txt, каждая строка которого может содержать одно или несколько целых чисел, разделенных одним или несколькими пробелами.
+```python
+with open(r'numbers.txt') as file:
+    content = list(map(str.strip, file.readlines()))
+    for i in content:
+        print(sum(list(map(int, i.split()))))
+```
+
+5. Вам доступен текстовый файл nums.txt. В файле могут быть записаны целые неотрицательные числа и все, что угодно. Числом назовем последовательность одной и более цифр, идущих подряд (число всегда неотрицательно).
+Напишите программу, которая вычисляет сумму всех чисел, записанных в файле.
+```python
+import re
+
+with open(r'nums.txt') as file:
+    my_list = [re.findall(r'\d+', line) for line in file.readlines()]
+    unpacked = list(sum(my_list, []))
+    print(sum(list(map(int, unpacked))))
+```
+
+6. Вам доступен текстовый файл file.txt, набранный латиницей. Напишите программу, которая выводит количество букв латинского алфавита, слов и строк. Выведите три найденных числа в формате, приведенном в примере.
+```python
+with open(r'file.txt') as file:
+    content = list(map(str.strip, file.readlines()))
+    content_uppered = list(map(str.upper, content))
+
+    counter_letters = 0                 # считаем кол-во лат. букв, переведенных в верхний регистр
+    for i in content_uppered:
+        for j in i:
+            if 90 >= ord(j) >= 65:      # находится ли буква в верхнем регистре диапазона юникод
+                counter_letters += 1
+
+    counter_words = 0                   # считаем кол-во слов
+    for i in content:
+        for j in i.split():
+            counter_words += 1
+
+    counter_length = 0                 #  считаем кол-во строк
+    for i in content:
+        counter_length += 1
+
+    print(f"""Input file contains:\n{counter_letters} letters\n{counter_words} words\n{counter_length} lines""")
+```
+
+7. Вам доступны два текстовых файла first_names.txt и last_names.txt, один с именами, другой с фамилиями.
+Напишите программу, которая c помощью модуля random создает 33 случайные пары имя + фамилия, а затем выводит их, каждую на отдельной строке.
+```python
+import random
+
+with open(r'first_names.txt') as f_name, open(r'last_names.txt') as l_name:
+    content_f_name = list(map(str.strip, f_name.readlines()))
+    content_l_name = list(map(str.strip, l_name.readlines()))
+    for i in range(3):
+        print(f'{random.choice(content_f_name)} {random.choice(content_l_name)}')
+```
+8. Вам доступен CSV-файл data.csv, содержащий информацию в csv формате. Напишите функцию read_csv для чтения данных из этого файла. Она должна возвращать список словарей, интерпретируя первую строку как имена ключей, а каждую последующую строку как значения этих ключей.
+```python
+import csv
+
+def read_csv():
+    with open('data.csv') as csv_file:
+        reader = csv.DictReader(csv_file)
+        return [row for row in reader]
+```
+
+9. Напишите программу, которая считывает строку текста и записывает её в текстовый файл output.txt.
+```python
+# put your python code here
+s = input()
+
+with open('output.txt', 'w', encoding='utf-8') as output:
+    print(s, file=output)
+```
+
+10. Вам доступен текстовый файл input.txt, состоящий из нескольких строк. Напишите программу для записи содержимого этого файла в файл output.txt в виде нумерованного списка, где перед каждой строкой стоит ее номер, символ ) и пробел. Нумерация строк должна начинаться с 11.
+```python
+with open(r'input.txt') as input_file, open(r'output.txt', 'w') as output_file:
+    content = list(map(str.strip, input_file.readlines()))
+    for index, item in enumerate(content, 1):
+        print(f'{index}) {item}', file=output_file)
+```
+
+11. Вам доступен текстовый файл class_scores.txt с оценками за итоговый тест на строках вида: фамилия оценка (фамилия и оценка разделены пробелом). Оценка - целое число от 00 до 100100 включительно.
+Напишите программу для добавления 55 баллов к каждому результату теста и вывода фамилий и новых результатов тестов в файл new_scores.txt.
+```python
+arr = []
+
+with open('class_scores.txt') as file:
+    for line in file.readlines():
+        arr.append(line.strip().split()[0] + ' ' + str(int(line.strip().split()[1]) + 5 if int(line.strip().split()[1]) < 95 else 100) + '\n')
+
+with open('new_scores.txt', 'w') as file:
+    file.writelines(arr)
+```
+
+12. Вам доступен текстовый файл logfile.txt с информацией о времени входа пользователя в систему и выхода из нее. Каждая строка файла содержит три значения, разделенные запятыми и символом пробела: имя пользователя, время входа, время выхода, где время указано в 24-часовом формате.
+```python
+from datetime import datetime
+
+with open(r'logfile.txt', encoding='utf-8') as input_file, open(r'output.txt', 'w', encoding='utf-8') as output_file:
+    content = list(map(str.strip, input_file.readlines()))
+    new_content = []
+    for i in content:
+        new_content.append(i.split(', '))
+
+    mapped = list(map(lambda x: [x[0], (datetime.strptime(x[2], "%H:%M") - datetime.strptime(x[1], "%H:%M")).total_seconds() >= 3600.0], new_content))
+    for i in mapped:
+        if i[1] is True:
+            print(i[0], file=output_file)
 ```
 
 
