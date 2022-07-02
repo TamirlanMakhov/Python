@@ -15,7 +15,7 @@
 
 -[Функции](https://github.com/TamirlanMakhov/Python#Функции)
 
--[Работа с файлами]https://github.com/TamirlanMakhov/Python#%D0%A4%D0%B0%D0%B9%D0%BB%D1%8B)
+-[Работа с файлами](https://github.com/TamirlanMakhov/Python#%D0%A4%D0%B0%D0%B9%D0%BB%D1%8B)
 
 
 
