@@ -870,3 +870,77 @@ def my_sum(x):
 print(sorted(numbers, key=my_sum))
 ```
 
+8. Список athletes содержит сведения о спортсменах в виде кортежей: (имя, возраст, рост, вес).
+
+Напишите программу сортировки списка спортсменов по указанному полю:
+
+11: по имени;
+22: по возрасту;
+33: по росту;
+44: по весу.
+```python
+athletes = [('Дима', 10, 130, 35), ('Тимур', 11, 135, 39), ('Руслан', 9, 140, 33), ('Рустам', 10, 128, 30), ('Амир', 16, 170, 70), ('Рома', 16, 188, 100), ('Матвей', 17, 168, 68), ('Петя', 15, 190, 90)]
+
+
+n = int(input())
+
+def generator(index):
+    def cmp(tpl):
+        return tpl[index - 1]
+    return cmp
+
+for i in sorted(athletes, key=generator(n)): 
+    print(*i, end='\n')
+```
+
+9. На вход программе подается строка натуральных чисел. Из элементов строки формируется список чисел.
+Напишите программу сортировки списка чисел в порядке неубывания суммы их цифр. При этом, если два числа имеют одинаковую сумму цифр, следует сохранить их взаиморасположение в начальном списке.
+```python
+n = [int(x) for x in input().split()]  # переводим строку чисел в список чисел
+
+def my_sum(x):
+    sum_count = 0
+    while len(str(x)) > 1:
+        sum_count += x % 10
+        x //= 10
+    return sum_count + x % 10
+
+print(*sorted(n, key=my_sum))
+```
+
+10. Требовалось написать программу, которая:
+преобразует список floats в список чисел, возведенных в квадрат и округленных с точностью до одного десятичного знака;
+фильтрует список words  и оставляет только палиндромы длиной более 44 символов;
+находит произведение чисел из списка numbers.
+```python
+from functools import reduce
+
+floats = [4.35, 6.09, 3.25, 9.77, 2.16, 8.88, 4.59, 34.23, 12.12, 4.67, 2.45, 9.32]
+words = ['racecar', 'akinremi', 'deed', 'temidayo', 'omoseun', 'civic', 'TATTARRATTAT', 'malayalam', 'nun']
+numbers = [4, 6, 9, 23, 5]
+
+# Исправьте этот код
+map_result = list(map(lambda num: round(num**2, 1), floats))
+filter_result = list(filter(lambda name: name == name[::-1] and len(name) > 4, words))
+reduce_result = reduce(lambda num1, num2: num1 * num2, numbers, 1)
+
+print(map_result)
+print(filter_result)
+print(reduce_result)
+```
+
+11. Напишите функцию func, используя синтаксис анонимных функций, которая принимает строковый аргумент и возвращает значение True, если переданный аргумент начинается и заканчивается на английскую букву a (регистр буквы неважен) и False в противном случае.
+```python
+func = lambda x: True if x[0].lower() == 'a' and x[-1].lower() == 'a' else False
+```
+
+12. На вход программе на первой строке подаются коэффициенты многочлена, разделенные символом пробела и целое число x на второй строке. Напишите программу, которая вычисляет значение указанного многочлена при заданном значении x.
+
+```python
+from functools import reduce as r
+
+eval = lambda coef, x: r(lambda v, c: c + v * x, map(int, coef))
+print(eval(input().split(), int(input())))
+```
+
+
